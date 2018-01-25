@@ -3,6 +3,8 @@ package br.com.terranostra.main;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
@@ -20,9 +22,10 @@ public final class Main {
   
     private static final String GEOCODER_REQUEST_PREFIX_FOR_XML = "http://maps.google.com/maps/api/geocode/xml";
   
-    public static void main(String[] args) throws IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+//    public static void main(String[] args) throws IOException, XPathExpressionException, ParserConfigurationException, SAXException{
+    public static String geocodificacaoApiGoogle(String address) throws IOException, XPathExpressionException, ParserConfigurationException, SAXException{
         
-        String address = "qn 8b conjunto 3, Riacho Fundo 2, DF";
+       // String address = "qn 8b conjunto 3, Riacho Fundo 2, DF";
         
         
         address = java.net.URLEncoder.encode(address, "UTF-8");
@@ -76,7 +79,14 @@ public final class Main {
             System.out.println(lat);
             System.out.println(lng);
         }
+        return lat +" / "+ lng;
         
-        
+    }
+    public static void main(String[] args) throws XPathExpressionException, IOException, ParserConfigurationException, SAXException {
+      String endereco = JOptionPane.showInputDialog("Informe endereço a ser geocodificado");
+      
+      String latlong = geocodificacaoApiGoogle(endereco);
+      
+      JOptionPane.showMessageDialog(null, "lat e long: " + latlong);
     }
 }
