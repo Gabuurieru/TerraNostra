@@ -1,4 +1,4 @@
-package webservice;
+package br.com.terranostra.webservice;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

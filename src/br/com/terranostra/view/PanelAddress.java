@@ -17,7 +17,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.xml.sax.SAXException;
 
-import webservice.ConnectionGoogle;
+import br.com.terranostra.webservice.ConnectionGoogle;
 
 public class PanelAddress extends JFrame {
     
@@ -40,25 +40,22 @@ public class PanelAddress extends JFrame {
         btGeocodificar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String myString = null;
-                try {
-                    myString = cgogle.callApiGoogle((String) fildAddress.getText());
-                } catch (XPathExpressionException | IOException | ParserConfigurationException | SAXException e1) {
-                    e1.printStackTrace();
-                }
-                JOptionPane.showMessageDialog(null, myString);
+                String response = null;
+                if( fildAddress.getText() instanceof String && fildAddress.getText() != null){
+                    try {
+                        response = cgogle.callApiGoogle((String) fildAddress.getText());
+                    } catch (XPathExpressionException | IOException | ParserConfigurationException | SAXException e1) {
+                        e1.printStackTrace();
+                    }
+                }else {
+                    response = "Informe um endereço"; 
+                }    
+                JOptionPane.showMessageDialog(null, response);
             }
         });
         
-        
-        
         jp1.add(fildAddress);
         jp1.add(btGeocodificar);
-        
-        
-        
-
-        
         
         return  jtp;
     }
