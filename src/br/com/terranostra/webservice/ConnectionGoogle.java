@@ -37,7 +37,6 @@ public class ConnectionGoogle {
     
               // read result and parse into XML Document
               geocoderResultDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(geocoderResultInputSource);
-              ;
             } finally {
               conn.disconnect();
             }

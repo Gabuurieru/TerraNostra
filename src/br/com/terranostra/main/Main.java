@@ -21,6 +21,4 @@ public final class Main {
         panelAdress.setVisible(true);
          
     }
-  
-
 }

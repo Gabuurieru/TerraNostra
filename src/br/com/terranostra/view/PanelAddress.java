@@ -31,13 +31,13 @@ public class PanelAddress extends JFrame {
         
         JTextField fildAddress = new JTextField();
         fildAddress.setPreferredSize(new Dimension(120, 22));
-        JButton btGeocodificar = new JButton();
-        btGeocodificar.setPreferredSize(new Dimension(200, 22));
-        btGeocodificar.setText("Geocodificar");
+        JButton btGeocode = new JButton();
+        btGeocode.setPreferredSize(new Dimension(200, 22));
+        btGeocode.setText("Geocodificar");
         
         ConnectionGoogle cgogle = new ConnectionGoogle();
         
-        btGeocodificar.addActionListener(new ActionListener() {
+        btGeocode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String response = null;
@@ -55,9 +55,10 @@ public class PanelAddress extends JFrame {
         });
         
         jp1.add(fildAddress);
-        jp1.add(btGeocodificar);
+        jp1.add(btGeocode);
         
         return  jtp;
     }
+    
     
 }

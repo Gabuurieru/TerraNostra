@@ -1,11 +1,31 @@
 package br.com.terranostra.view;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
+
+import org.xml.sax.SAXException;
+
+import br.com.terranostra.jdbc.ConnectionFactory;
+import br.com.terranostra.jdbc.GeocodingDAO;
+import br.com.terranostra.webservice.ConnectionGoogle;
 
 public class PanelDataSource {
     // -- dados do banco
@@ -49,27 +69,61 @@ public class PanelDataSource {
         
         jtp.addTab("Bando de Dados PostgreSQL", jp2);
         
+        JButton btConnect = new JButton();
+        btConnect.setPreferredSize(new Dimension(200, 22));
+        btConnect.setText("Geocodificar");
+        
+        btConnect.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              String response = null;
+              if(fildHost.getText() != null && fildPort.getText() != null && fildUserName.getText() != null && fildPassWord.getText() != null){
+                  ConnectionFactory  con = new ConnectionFactory();
+                  //Connection conect = con.getConnection(fildHost.getText(), fildPort.getText(), fildUserName.getText(), fildPassWord.getText());
+                  Connection conect = con.getConnection();
+                  
+                  GeocodingDAO geoDao = new GeocodingDAO();
+                  ResultSet rs = geoDao.getSelect(conect);
+                  ConnectionGoogle cgogle = new ConnectionGoogle();
+                  try {
+                    //List<String> listLatLong = new ArrayList<>();  
+                      
+                    while(rs.next()) {
+                      //response = cgogle.callApiGoogle((String) rs.getString("endereco"));
+                      //listLatLong.add(cgogle.callApiGoogle((String) rs.getString("endereco")));
+                      //System.out.println(rs.getString("endereco"));
+                      geoDao.insert(conect, Long.parseLong(rs.getString("id")), cgogle.callApiGoogle((String) rs.getString("endereco")));
+                    }
+                    
+                    
+                  } catch (SQLException | XPathExpressionException | IOException | ParserConfigurationException | SAXException e1) {
+                    e1.printStackTrace();
+                  }
+                  geoDao.close();
+                  
+               }
+                 
+                  
+                  
+//              }else {
+//                  response = "Informe um endereço"; 
+//              }    
+//              JOptionPane.showMessageDialog(null, response);
+          }
+      });
+      jp2.add(btConnect);  
+        
         return  jtp;
     }
     
     
+    public void setJLabel(JPanel jp2, String ... labels){
+      
+      for (String string : labels) {
+          JLabel label = new JLabel(string);
+          label.setPreferredSize(new Dimension(120, 22));
+      }
+      
+    }
     
-//  public static void main(String[] args) {
-//  Connection con = new ConnectionFactory().getConnection();
-//  try {
-//    
-//    DatabaseMetaData meta = con.getMetaData();
-//    ResultSet schemas = meta.getSchemas();
-//    while (schemas.next()) {
-//      String tableSchema = schemas.getString(1);    // "TABLE_SCHEM"
-////      String tableCatalog = schemas.getString(2); //"TABLE_CATALOG"
-//      System.out.println("tableSchema: "+tableSchema);
-//    }
-//    
-//  } catch (SQLException e) {
-//    // TODO Auto-generated catch block
-//    e.printStackTrace();
-//  }
-//  
-//}
 }
