@@ -28,14 +28,11 @@ public class GeocodingDAO {
     
     
     public void insert(Connection conect, Long id, String latLong) {
-      //rs = null;
       try{
-//        for (String latLong : listLatLong) {
-            stmt = conect.prepareStatement("UPDATE public.teste set lat_log = ? where id = ?");
-            stmt.setString(1, latLong);
-            stmt.setLong(2, id);
-            stmt.execute();
-//        }  
+        stmt = conect.prepareStatement("UPDATE public.teste set lat_log = ? where id = ?");
+        stmt.setString(1, latLong);
+        stmt.setLong(2, id);
+        stmt.execute();
         this.conect = conect;
       } catch (SQLException e2) {
            e2.printStackTrace();

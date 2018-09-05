@@ -86,12 +86,7 @@ public class PanelDataSource {
                   ResultSet rs = geoDao.getSelect(conect);
                   ConnectionGoogle cgogle = new ConnectionGoogle();
                   try {
-                    //List<String> listLatLong = new ArrayList<>();  
-                      
                     while(rs.next()) {
-                      //response = cgogle.callApiGoogle((String) rs.getString("endereco"));
-                      //listLatLong.add(cgogle.callApiGoogle((String) rs.getString("endereco")));
-                      //System.out.println(rs.getString("endereco"));
                       geoDao.insert(conect, Long.parseLong(rs.getString("id")), cgogle.callApiGoogle((String) rs.getString("endereco")));
                     }
                     
@@ -102,13 +97,7 @@ public class PanelDataSource {
                   geoDao.close();
                   
                }
-                 
                   
-                  
-//              }else {
-//                  response = "Informe um endereço"; 
-//              }    
-//              JOptionPane.showMessageDialog(null, response);
           }
       });
       jp2.add(btConnect);  

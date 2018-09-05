@@ -1,12 +1,14 @@
 package br.com.terranostra.main;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 import br.com.terranostra.view.PanelAddress;
 import br.com.terranostra.view.PanelDataSource;
 
-public final class Main {
+public final class Application {
     
     public static void main(String[] args) {
         
@@ -15,8 +17,7 @@ public final class Main {
         PanelDataSource panelData = new PanelDataSource();
         jtp =  panelAdress.createPanelAddress(jtp);
         jtp = panelData.createPanelDataSource(jtp);
-        
-        
+        panelAdress.setMinimumSize(new Dimension(500, 500));
         panelAdress.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panelAdress.setVisible(true);
          
