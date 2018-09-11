@@ -72,7 +72,6 @@ public class PanelDataSource {
         JButton btConnect = new JButton();
         btConnect.setPreferredSize(new Dimension(200, 22));
         btConnect.setText("Geocodificar");
-        
         btConnect.addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
@@ -86,11 +85,10 @@ public class PanelDataSource {
                   ResultSet rs = geoDao.getSelect(conect);
                   ConnectionGoogle cgogle = new ConnectionGoogle();
                   try {
-                    while(rs.next()) {
-                      geoDao.insert(conect, Long.parseLong(rs.getString("id")), cgogle.callApiGoogle((String) rs.getString("endereco")));
-                    }
-                    
-                    
+                      geoDao.addCollum(conect, "teste");
+                      while(rs.next()) {
+                        geoDao.insert(conect, Long.parseLong(rs.getString("id")), cgogle.callApiGoogle((String) rs.getString("endereco")));
+                      }
                   } catch (SQLException | XPathExpressionException | IOException | ParserConfigurationException | SAXException e1) {
                     e1.printStackTrace();
                   }
@@ -101,7 +99,6 @@ public class PanelDataSource {
           }
       });
       jp2.add(btConnect);  
-        
         return  jtp;
     }
     

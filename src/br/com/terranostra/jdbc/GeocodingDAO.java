@@ -15,7 +15,7 @@ public class GeocodingDAO {
     public ResultSet getSelect(Connection conect) {
       //rs = null;
       try{  
-        stmt = conect.prepareStatement("SELECT id, endereco, lat_log FROM public.teste");
+        stmt = conect.prepareStatement("SELECT id, endereco FROM public.teste");
         stmt.execute();
         rs = stmt.executeQuery();
         //conect.close();
@@ -29,9 +29,28 @@ public class GeocodingDAO {
     
     public void insert(Connection conect, Long id, String latLong) {
       try{
-        stmt = conect.prepareStatement("UPDATE public.teste set lat_log = ? where id = ?");
+        stmt = conect.prepareStatement("UPDATE public.teste set lat_long = ? where id = ?");
         stmt.setString(1, latLong);
         stmt.setLong(2, id);
+        stmt.execute();
+        this.conect = conect;
+      } catch (SQLException e2) {
+           e2.printStackTrace();
+      }
+    }
+    
+    public void addCollum(Connection conect, String table) {
+      try{
+//        stmt = conect.prepareStatement("ALTER TABLE "+table+" ADD COLUMN IF NOT EXISTS lat_long character varying(100);");
+        stmt = conect.prepareStatement("DO $$ \n" + 
+            "    BEGIN\n" + 
+            "        BEGIN\n" + 
+            "            ALTER TABLE "+table+" ADD COLUMN lat_long CHARACTER VARYING(100);\n" + 
+            "        EXCEPTION\n" + 
+            "            WHEN duplicate_column THEN RAISE NOTICE 'column <lat_long> already exists in <"+table+">.';\n" + 
+            "        END;\n" + 
+            "    END;\n" + 
+            "$$");
         stmt.execute();
         this.conect = conect;
       } catch (SQLException e2) {

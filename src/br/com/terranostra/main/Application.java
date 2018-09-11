@@ -2,6 +2,7 @@ package br.com.terranostra.main;
 
 import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
@@ -20,6 +21,7 @@ public final class Application {
         panelAdress.setMinimumSize(new Dimension(500, 500));
         panelAdress.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panelAdress.setVisible(true);
-         
+        ImageIcon img = new ImageIcon("/home/gabriel/Imagens/2018-08-10.png"); 
+        panelAdress.setIconImage(img.getImage());
     }
 }
