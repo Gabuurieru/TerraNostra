@@ -1,7 +1,10 @@
+/target/
+
 # Eclipse
 .classpath
 .project
 .editorconfig
+.settings/
 
 /bin
 
